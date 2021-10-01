@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
@@ -24,8 +26,8 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
                description: @product.description,
                img_url: @product.img_url,
                price: @product.price,
-               title: @title,
-             },
+               title: @title
+             }
            }
     end
 
@@ -49,8 +51,8 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
               description: @product.description,
               img_url: @product.img_url,
               price: @product.price,
-              title: @title,
-            },
+              title: @title
+            }
           }
     assert_redirected_to product_url(@product)
   end

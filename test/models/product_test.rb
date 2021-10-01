@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ProductTest < ActiveSupport::TestCase
@@ -15,7 +17,7 @@ class ProductTest < ActiveSupport::TestCase
       Product.new(
         title: 'My Book Title',
         description: 'yyy',
-        img_url: 'zzz.jpg',
+        img_url: 'zzz.jpg'
       )
     product.price = -1
     assert product.invalid?
@@ -31,7 +33,7 @@ class ProductTest < ActiveSupport::TestCase
         title: 'My Book Title',
         description: 'yyy',
         price: 1,
-        img_url: img_url,
+        img_url: img_url
       )
   end
   test 'the img must have a valid file format' do
@@ -57,7 +59,7 @@ class ProductTest < ActiveSupport::TestCase
         title: products(:ruby).title,
         description: 'lll',
         price: 1,
-        img_url: 'chung.png',
+        img_url: 'chung.png'
       )
     assert product.invalid?
     assert_equal [I18n.translate('errors.messages.taken')],

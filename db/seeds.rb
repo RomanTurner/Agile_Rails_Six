@@ -10,7 +10,7 @@ Product.delete_all
   Product.create(
     title: Faker::Commerce.product_name,
     description: Faker::Fantasy::Tolkien.poem,
-    img_url: 'chung.png',
+    img_url: 'https://picsum.photos/200/300.jpg',
     price: Faker::Commerce.price(range: 0..8.00, as_string: true),
   )
 end

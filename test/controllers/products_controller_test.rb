@@ -12,11 +12,11 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     get products_url
     assert_response :success
     assert_select 'table' do |element|
-      assert_select element,'tr', minimum: 4
+      assert_select element, 'tr', minimum: 4
       assert_select element, 'tfoot', 1
       assert_select '.list_image', minimum: 3
       assert_select '.description', minimum: 3
-    end 
+    end
   end
 
   test 'should get new' do
@@ -32,8 +32,8 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
                description: @product.description,
                img_url: @product.img_url,
                price: @product.price,
-               title: @title
-             }
+               title: @title,
+             },
            }
     end
 
@@ -57,16 +57,18 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
               description: @product.description,
               img_url: @product.img_url,
               price: @product.price,
-              title: @title
-            }
+              title: @title,
+            },
           }
     assert_redirected_to product_url(@product)
   end
 
-  test 'should destroy product' do
-    assert_difference('Product.count', -1) { delete product_url(@product) }
-
+  test 'can not delete product in cart' do
+    assert_difference('Product.count', 0) { delete product_url(products(:two)) }
     assert_redirected_to products_url
   end
-
+  test 'should destroy product' do
+    assert_difference('Product.count', -1) { delete product_url(@product) }
+    assert_redirected_to products_url
+  end
 end

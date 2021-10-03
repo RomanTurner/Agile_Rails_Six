@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Product < ApplicationRecord
   validates :title, :description, :img_url, presence: true
   validates :title, uniqueness: true
@@ -6,6 +8,6 @@ class Product < ApplicationRecord
             allow_blank: true,
             format: {
               with: /\.(gif|jpg|png)\Z/i,
-              message: 'must be a URL for GIF, JPG, PNG image',
+              message: 'must be a URL for GIF, JPG, PNG image'
             }
 end

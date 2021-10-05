@@ -5,8 +5,9 @@
     <li><a href="/questions">Questions</a></li>
     <li><a href="/news">News</a></li>
     <li><a href="/contact">Contact</a></li>
-      <% if session[:counter] %>
-        <li><a href="/">Store Views <%= session[:counter] %></a></li>
-      <% end %>
+    <li><a href=<%="/carts/#{session[:cart_id]}"%> >Your Cart</a></li>
+    <% if session[:counter] %>
+      <li><a href="/">Store Views <%= session[:counter] %></a></li>
+    <% end %>
   </ul>
 </nav>

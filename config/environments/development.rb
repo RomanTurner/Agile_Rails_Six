@@ -24,7 +24,7 @@ Rails.application.configure do
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+      'Cache-Control' => "public, max-age=#{2.days.to_i}",
     }
   else
     config.action_controller.perform_caching = false
@@ -74,5 +74,5 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true
 end

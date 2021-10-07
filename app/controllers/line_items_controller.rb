@@ -1,23 +1,29 @@
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: %i[create destroy edit index]
   before_action :set_line_item, only: %i[show edit update destroy]
 
   # GET /line_items or /line_items.json
   def index
-    @line_items = LineItem.all
+    redirect_to cart_url(@cart)
   end
 
   # GET /line_items/1 or /line_items/1.json
-  def show; end
-
-  # GET /line_items/new
-  def new
-    @line_item = LineItem.new
+  def show
+    id = @line_item.product_id
+    redirect_to product_path(id)
   end
 
   # GET /line_items/1/edit
-  def edit; end
+  def edit
+    @line_item.quantity -= 1
+    @line_item.save
+    respond_to do |format|
+      format.html { redirect_to root_url, notice: 'Item sucessfully removed' }
+      format.js { @current_item = @line_item }
+      format.json { render :show, status: :created, location: @line_item }
+    end
+  end
 
   # POST /line_items or /line_items.json
   def create
@@ -27,12 +33,11 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       if @line_item.save
         session[:counter] = 0
-        format.html do
-          redirect_to @line_item.cart, notice: 'It was a great suck sex! Great JOB.'
-        end
+        format.html { redirect_to root_url }
+        format.js { @current_item = @line_item }
         format.json { render :show, status: :created, location: @line_item }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new }
         format.json do
           render json: @line_item.errors, status: :unprocessable_entity
         end
@@ -61,10 +66,8 @@ class LineItemsController < ApplicationController
   def destroy
     @line_item.destroy
     respond_to do |format|
-      format.html do
-        redirect_to line_items_url,
-                    notice: 'Line item was successfully destroyed.'
-      end
+      format.js 
+      format.html { redirect_to root_path, notice: 'Item removed from cart' }
       format.json { head :no_content }
     end
   end
@@ -78,6 +81,6 @@ class LineItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def line_item_params
-    params.require(:line_item).permit(:product_id, :cart_id)
+    params.require(:line_item).permit(:product_id, :price)
   end
 end

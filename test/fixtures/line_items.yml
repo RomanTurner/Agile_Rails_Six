@@ -9,17 +9,11 @@ one:
 two:
   quantity: 2
   product: two
-  cart: two
+  cart: one
   price: 15
 
 three:
   quantity: 2
-  product: one
-  cart: one
-  price: 15
-
-four:
-  quantity: 2
   product: ruby
-  cart: one
+  cart: two
   price: 15

@@ -14,8 +14,13 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 
+  # test '#add_product' do
+  #   assert_difference('@cart.line_items.count', 1) do
+  #     post line_items_url, params: { product_id: products(:ruby).id, price: products(:ruby).price }
+  #   end
+  # end
 
-  test 'should update cart' do\
+  test 'should update cart' do
     patch cart_url(@cart), params: { cart: {} }
     assert_redirected_to cart_url(@cart)
   end
@@ -26,6 +31,6 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Cart.count', -1) { delete cart_url(@cart) }
 
-    assert_redirected_to store_index_url
+    assert_redirected_to root_url
   end
 end

@@ -44,17 +44,18 @@ header.main {
   -webkit-box-direction: normal;
 
   @media (min-width: 30em) {
-    flex-direction: row;  // desktop is vertically laid out
+    flex-direction: row; // desktop is vertically laid out
     -webkit-box-orient: horizontal;
   }
 
   nav {
+    min-width: 25em;
     padding-bottom: 1em;
     background: #141;
-    text-align: center;  // mobile has centered nav
+    text-align: center; // mobile has centered nav
     @media (min-width: 30em) {
       text-align: left; // desktop nav is left-aligned
-      padding: 1em;     // and needs more padding
+      padding: 1em; // and needs more padding
     }
     ul {
       list-style: none;
@@ -81,10 +82,11 @@ header.main {
   }
   main {
     padding: 0.5em;
-     height: 100vh;
+    height: 100vh;
   }
 }
-.notice, #notice {
+.notice,
+#notice {
   background: #ffb;
   border-radius: 0.5em;
   border: solid 0.177em #882;
@@ -93,5 +95,20 @@ header.main {
   margin-bottom: 1em;
   padding: 1em 1.414em;
   text-align: center;
+}
+
+#cart {
+  article {
+    h2 {
+      margin-top: 0;
+    }
+    background: white;
+    border-radius: 0.5em;
+    margin: 1em;
+    padding: 1.414em;
+    @media (min-width: 30em) {
+      margin: 0;
+    }
+  }
 }
 //

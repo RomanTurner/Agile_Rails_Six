@@ -43,4 +43,8 @@
   input[type='submit']:hover {
     background-color: #992;
   }
+  .buttons {
+    display: flex;
+    justify-content: space-evenly;
+  }
 }

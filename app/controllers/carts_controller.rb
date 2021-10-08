@@ -48,7 +48,7 @@ class CartsController < ApplicationController
     @cart.destroy if @cart.id == session[:cart_id]
     session[:cart_id] = nil
     respond_to do |format|
-      format.js { flash[:notice] = "Here is my flash notice" }
+      format.js 
       format.html do
         redirect_to root_url, notice: 'Your cart is currently empty'
       end

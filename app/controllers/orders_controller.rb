@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
-   include CurrentCart
-  before_action :set_cart, only: [:new, :create]
+  include CurrentCart
+  before_action :set_cart, only: %i[new create]
   before_action :ensure_cart_isnt_empty, only: :new
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: %i[show edit update destroy]
 
   # GET /orders or /orders.json
   def index
@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         Cart.destroy(session[:cart_id])
-        session[:cart_id] = nil 
+        session[:cart_id] = nil
         format.html do
           redirect_to root_url, notice: 'Thank you for your order.'
         end
@@ -71,6 +71,18 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def pay_type_params
+    if order_params[:pay_type] == 'Credit card'
+      params.require(:order).permit(:credit_card_number, :expiration_date)
+    elsif order_params[:pay_type] == 'Check'
+      params.require(:order).permit(:routing_number, :account_number)
+    elsif order_params[:pay_type] == 'Purchase order'
+      params.require(:order).permit(:po_number)
+    else
+      {}
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_order

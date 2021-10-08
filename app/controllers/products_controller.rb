@@ -77,6 +77,17 @@ class ProductsController < ApplicationController
     end
   end
 
+  def who_bought
+    @product = Product.find(params[:id])
+    @latest_order = @product.orders.order(:updated_at).last
+    respond_to do |format|
+      format.xml { render @product.as_json }
+      format.html { render :who_bought }
+      format.json { render :who_bought, status: :ok }
+      format.atom if stale?(@latest_order)
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

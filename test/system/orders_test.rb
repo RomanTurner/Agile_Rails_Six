@@ -1,49 +1,58 @@
-require "application_system_test_case"
+require 'application_system_test_case'
 
 class OrdersTest < ApplicationSystemTestCase
-  setup do
-    @order = orders(:one)
+  setup { @order = orders(:one) }
+
+  test 'visiting the index' do
+    visit orders_url
+    assert_selector 'h1', text: 'Orders'
   end
 
-  test "visiting the index" do
+  test 'destroying a Order' do
     visit orders_url
-    assert_selector "h1", text: "Orders"
+    page.accept_confirm { click_on 'Destroy', match: :first }
+
+    assert_text 'Order was successfully destroyed'
   end
 
-  test "creating a Order" do
-    visit orders_url
-    click_on "New Order"
+  test 'check routing number' do
+    visit root_url
+    click_on 'Add to Cart', match: :first
+    click_on 'Checkout'
 
-    fill_in "Address", with: @order.address
-    fill_in "Email", with: @order.email
-    fill_in "Name", with: @order.name
-    fill_in "Pay type", with: @order.pay_type
-    click_on "Create Order"
+    fill_in 'order_name', with: 'Bob Law'
+    fill_in 'order_address', with: '234 Big Law Important Street'
+    fill_in 'order_email', with: 'boblawlawblog@blogspot.com'
 
-    assert_text "Order was successfully created"
-    click_on "Back"
+    assert_no_selector '#order_routing_number'
+    select 'Check', from: 'Pay type'
+    assert_selector '#order_routing_number'
   end
 
-  test "updating a Order" do
-    visit orders_url
-    click_on "Edit", match: :first
+  test 'credit card number' do
+    visit root_url
+    click_on 'Add to Cart', match: :first
+    click_on 'Checkout'
 
-    fill_in "Address", with: @order.address
-    fill_in "Email", with: @order.email
-    fill_in "Name", with: @order.name
-    fill_in "Pay type", with: @order.pay_type
-    click_on "Update Order"
+    fill_in 'order_name', with: 'Bob Law'
+    fill_in 'order_address', with: '234 Big Law Important Street'
+    fill_in 'order_email', with: 'boblawlawblog@blogspot.com'
 
-    assert_text "Order was successfully updated"
-    click_on "Back"
+    assert_no_selector '#order_credit_card_number'
+    select 'Credit card', from: 'Pay type'
+    assert_selector '#order_credit_card_number'
   end
 
-  test "destroying a Order" do
-    visit orders_url
-    page.accept_confirm do
-      click_on "Destroy", match: :first
-    end
+  test 'po number' do
+    visit root_url
+    click_on 'Add to Cart', match: :first
+    click_on 'Checkout'
 
-    assert_text "Order was successfully destroyed"
+    fill_in 'order_name', with: 'Bob Law'
+    fill_in 'order_address', with: '234 Big Law Important Street'
+    fill_in 'order_email', with: 'boblawlawblog@blogspot.com'
+    assert_no_selector '#order_po_number'
+    select 'Purchase order', from: 'Pay type'
+    assert_selector '#order_po_number'
   end
 end
